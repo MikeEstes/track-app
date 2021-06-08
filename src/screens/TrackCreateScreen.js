@@ -1,20 +1,26 @@
 // Import Dependencies
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text } from 'react-native-elements';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import Map from '../components/Map';
 
 // Create component
 const TrackCreateScreen = () => {
   return (
-    <View>
-      <Text style={styles.header}>Track Create Screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text h2>Create a Track</Text>
+        <Map />
+      </View>
+    </SafeAreaView>
   );
 };
 
 // Create Stylesheet
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 48,
+  container: {
+    flex: 1,
+    paddingTop: Platform.OS === 'android' ? 50 : 0,
   },
 });
 
