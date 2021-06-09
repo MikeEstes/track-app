@@ -1,16 +1,20 @@
 // Import Dependencies
-// import '../_mockLocation';
+import '../_mockLocation';
 import React, { useContext } from 'react';
 import { Text } from 'react-native-elements';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import Map from '../components/Map';
 import { Context as LocationContext } from '../context/LocationContext';
 import useLocation from '../hooks/useLocation';
+import { withNavigationFocus } from 'react-navigation';
+import TrackForm from '../components/TrackForm';
 
 // Create component
-const TrackCreateScreen = () => {
-  const { addLocation } = useContext(LocationContext);
-  const [err] = useLocation(addLocation);
+const TrackCreateScreen = ({ isFocused }) => {
+  const { state, addLocation } = useContext(LocationContext);
+  const [err] = useLocation(isFocused, (location) => {
+    addLocation(location, state.recording);
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -18,11 +22,10 @@ const TrackCreateScreen = () => {
         <Text h2>Create a Track</Text>
         <Map />
         {err ? (
-          <Text style={styles.errorMessage}>
-            Please enable location services
-          </Text>
+          <Text style={styles.err}>Please enable location services</Text>
         ) : null}
       </View>
+      <TrackForm />
     </SafeAreaView>
   );
 };
@@ -33,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Platform.OS === 'android' ? 50 : 0,
   },
-  errorMessage: {
+  err: {
     fontSize: 16,
     color: 'red',
     marginLeft: 15,
@@ -42,4 +45,4 @@ const styles = StyleSheet.create({
 });
 
 // Export Component
-export default TrackCreateScreen;
+export default withNavigationFocus(TrackCreateScreen);
