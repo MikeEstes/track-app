@@ -1,6 +1,6 @@
 // Import Dependencies
 import '../_mockLocation';
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Text } from 'react-native-elements';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import Map from '../components/Map';
@@ -11,10 +11,17 @@ import TrackForm from '../components/TrackForm';
 
 // Create component
 const TrackCreateScreen = ({ isFocused }) => {
-  const { state, addLocation } = useContext(LocationContext);
-  const [err] = useLocation(isFocused, (location) => {
-    addLocation(location, state.recording);
-  });
+  const {
+    state: { recording },
+    addLocation,
+  } = useContext(LocationContext);
+  const callback = useCallback(
+    (location) => {
+      addLocation(location, recording);
+    },
+    [recording]
+  );
+  const [err] = useLocation(isFocused || recording, callback);
 
   return (
     <SafeAreaView style={styles.container}>
