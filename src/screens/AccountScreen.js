@@ -1,18 +1,19 @@
 // Import Dependencies
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from 'react-native-elements';
-import { SafeAreaView } from 'react-native';
 import Spacer from '../components/Spacer';
 import { Context as AuthContext } from '../context/AuthContext';
+import { FontAwesome } from '@expo/vector-icons';
 
 // Create component
 const AccountScreen = () => {
   const { signout } = useContext(AuthContext);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Account Screen</Text>
+    <SafeAreaView>
+      <Text style={styles.header}>Your Account</Text>
       <Spacer>
         <Button title='Sign Out' onPress={signout} />
       </Spacer>
@@ -22,11 +23,17 @@ const AccountScreen = () => {
 
 // Create Stylesheet
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === 'android' ? 50 : 0,
+  header: {
+    fontSize: 22,
+    marginLeft: 10,
+    marginTop: 10,
   },
 });
+
+AccountScreen.navigationOptions = {
+  title: 'Account',
+  tabBarIcon: <FontAwesome name='user-circle-o' size={20} />,
+};
 
 // Export Component
 export default AccountScreen;

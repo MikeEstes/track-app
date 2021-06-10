@@ -5,6 +5,7 @@ import Spacer from './Spacer';
 import { withNavigation } from 'react-navigation';
 
 // Create component
+// TODO: Style Text using React Native Elements
 const NavLink = ({ navigation, linkText, routeName }) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate({ routeName })}>

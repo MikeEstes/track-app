@@ -1,7 +1,22 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // ngrok http 3000
-// Need to update URL after 2 hours
-export default axios.create({
-  baseURL: 'http://a4cf7692839f.ngrok.io',
+const instance = axios.create({
+  baseURL: 'http://525731eba435.ngrok.io',
 });
+
+instance.interceptors.request.use(
+  async (config) => {
+    const token = await AsyncStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+export default instance;

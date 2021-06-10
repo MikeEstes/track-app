@@ -7,15 +7,12 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case 'add_error':
       return { ...state, errorMessage: action.payload };
-    case 'signin': {
+    case 'signin':
       return { token: action.payload, errormessage: '' };
-    }
-    case 'signout': {
+    case 'signout':
       return { token: null, errormessage: '' };
-    }
-    case 'clear_error_message': {
+    case 'clear_error_message':
       return { ...state, errorMessage: '' };
-    }
     default:
       return state;
   }
@@ -67,7 +64,7 @@ const tryLocalSignin = (dispatch) => async () => {
     dispatch({ type: 'signin', payload: token });
     navigate('TrackList');
   } else {
-    navigate('loginFlow');
+    navigate('Signup');
   }
 };
 

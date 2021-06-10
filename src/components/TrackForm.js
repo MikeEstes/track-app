@@ -1,9 +1,9 @@
 // Import Dependencies
 import React, { useContext } from 'react';
-import { StyleSheet } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import Spacer from '../components/Spacer';
+import Spacer from './Spacer';
 import { Context as LocationContext } from '../context/LocationContext';
+import useSaveTrack from '../hooks/useSaveTrack';
 
 // Create component
 const TrackForm = () => {
@@ -13,8 +13,8 @@ const TrackForm = () => {
     stopRecording,
     changeName,
   } = useContext(LocationContext);
+  const [saveTrack] = useSaveTrack();
 
-  console.log(locations.length);
   return (
     <>
       <Spacer>
@@ -31,12 +31,14 @@ const TrackForm = () => {
           <Button title='Start Recording' onPress={startRecording} />
         )}
       </Spacer>
+      <Spacer>
+        {!recording && locations.length ? (
+          <Button title='Save Track' onPress={saveTrack} />
+        ) : null}
+      </Spacer>
     </>
   );
 };
-
-// Create Stylesheet
-const styles = StyleSheet.create({});
 
 // Export Component
 export default TrackForm;
